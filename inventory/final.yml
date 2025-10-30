@@ -1,0 +1,13 @@
+---
+el:
+  hosts:
+    localhost_el:
+      ansible_connection: local
+deb:
+  hosts:
+    localhost_deb:
+      ansible_connection: local
+local:
+  hosts:
+    localhost:
+      ansible_connection: local

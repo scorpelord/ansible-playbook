@@ -1,0 +1,13 @@
+---
+el:
+  hosts:
+    centos.org:
+      ansible_connection: docker
+deb:
+  hosts:
+    debian.org:
+      ansible_connection: docker
+local:
+  hosts:
+    localhost:
+      ansible_connection: local
