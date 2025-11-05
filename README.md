@@ -1,40 +1,38 @@
-# Ansible Playbook
+# Ansible Playbook для установки Vector
 
-## Результаты выполнения задания
+## Описание
+Playbook устанавливает и настраивает Vector - высокопроизводительный пайплайн для обработки observability данных.
 
-### 1. Запуск на test.yml
-- **some_fact значение**: `12`
+## Что делает playbook?
+- Проверяет, установлен ли Vector
+- Создает пользователя и группу `vector`
+- Скачивает Vector с официального сайта
+- Распаковывает архив в `/opt/vector`
+- Создает симлинк на бинарник в `/usr/local/bin/vector`
+- Настраивает конфигурацию через Jinja2 шаблон
+- Создает systemd службу
+- Запускает и включает службу Vector
 
-### 2. Файл с переменными
-- **Файл**: `group_vars/all/examp.yml`
-- **Изменено на**: `all default fact`
-
-### 4. Запуск на prod.yml (после изменения)
-- **deb** (ubuntu): `all default fact`
-- **el** (centos7): `all default fact`
-
-### 6. Запуск после добавления group_vars
-- **deb** (ubuntu): `deb default fact`
-- **el** (centos7): `el default fact`
-
-### 8. Запуск с зашифрованными переменными
-- **Пароль vault**: `netology`
-- **Результат**: успешный запуск с расшифровкой переменных
-
-### 9. Плагины подключения
-- **Подходящий плагин для control node**: `local`
-
-### 11. Финальный запуск с localhost
-- **deb** (ubuntu): `deb default fact`
-- **el** (centos7): `el default fact`
-- **localhost**: `all default fact`
-
-## Структура проекта
-- `site.yml` - основной playbook
-- `inventory/` - inventory файлы
-- `group_vars/` - переменные групп (deb, el зашифрованы)
-- `vault.key` - ключ шифрования
+## Параметры
+- `vector_version`: версия Vector (по умолчанию: "0.37.0")
+- `vector_install_dir`: директория установки (по умолчанию: "/opt/vector")
+- `vector_config_dir`: директория конфигурации (по умолчанию: "/etc/vector")
+- `vector_user`: пользователь Vector (по умолчанию: "vector")
+- `vector_group`: группа Vector (по умолчанию: "vector")
 
 ## Использование
 ```bash
-ansible-playbook -i inventory/prod.yml site.yml --ask-vault-pass
+# Проверка синтаксиса
+ansible-playbook -i prod.yml site.yml --syntax-check
+
+# Проверка ansible-lint
+ansible-lint site.yml
+
+# Запуск в режиме проверки
+ansible-playbook -i prod.yml site.yml --check
+
+# Запуск с показом изменений
+ansible-playbook -i prod.yml site.yml --diff
+
+# Обычный запуск
+ansible-playbook -i prod.yml site.yml
