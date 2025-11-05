@@ -1,7 +1,0 @@
----
-all:
-  hosts:
-    ubuntu:
-      ansible_connection: docker
-    centos7:
-      ansible_connection: docker
