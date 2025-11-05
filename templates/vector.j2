@@ -1,0 +1,19 @@
+[api]
+enabled = true
+address = "127.0.0.1:8686"
+
+[sources.generate_syslog]
+type = "demo_logs"
+format = "syslog"
+interval = 1
+
+[sinks.console]
+type = "console"
+inputs = ["generate_syslog"]
+target = "stdout"
+
+[sinks.file]
+type = "file"
+inputs = ["generate_syslog"]
+path = "/var/log/vector/vector.log"
+encoding.codec = "text"
