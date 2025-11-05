@@ -1,0 +1,17 @@
+[Unit]
+Description=Vector
+Documentation=https://vector.dev
+After=network-online.target
+Requires=network-online.target
+
+[Service]
+User={{ vector_user }}
+Group={{ vector_group }}
+ExecStart=/usr/local/bin/vector --config-dir {{ vector_config_dir }}
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=always
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+WorkingDirectory=/tmp
+
+[Install]
+WantedBy=multi-user.target
